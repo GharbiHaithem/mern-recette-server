@@ -26,6 +26,7 @@ const userCtrl = {
                     { new: true }
 
                 )
+                localStorage.setItem('customer',JSON.stringify(updatedUser))
                 console.log(updatedUser)
                 res.json(updatedUser)
                
@@ -40,7 +41,7 @@ const userCtrl = {
                     token:generateToken(googleId)
                 })
                 await newUser.save()
-             
+                localStorage.setItem('customer',JSON.stringify(newUser))
                  res.json({
                     _id:newUser._id,
                     googleId:newUser.googleId,
