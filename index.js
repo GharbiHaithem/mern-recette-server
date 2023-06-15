@@ -51,7 +51,7 @@ app.use(passport.initialize())
 
 app.use(passport.session())
 app.use(cors({
-    origin:"http://localhost:3000",
+    origin:"https://heroic-banoffee-4688af.netlify.app",
     methods:"GET,POST,PUT,DELETE",
     credentials:true
 }))
