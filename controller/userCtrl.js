@@ -1,65 +1,89 @@
 const User = require('../model/user.model')
 const {generateToken} =require('../config/jwtToken')
 const userCtrl = {
-    createUser: async (req, res) => {
-        const { googleId ,email,fullname,pic,secret} = req.body
+    // createUser: async (req, res) => {
+    //     const { googleId ,email,fullname,pic,secret} = req.body
        
-        const findUser = await User.findOne({ googleId:req.body.googleId })
-           console.log(req.body.googleId)
-           console.log(findUser)
-            console.log({searchUser:findUser})
-            if (findUser !== null) {
-              console.log({request:req.user})
-                 const updateUser = {
-                    googleId:findUser.googleId,
-                    fullname: findUser.fullname,
-                 email: findUser.email,
-                     pic: findUser.pic,
-                    secret: findUser.secret,
-                    token:generateToken(findUser.googleId)
-             }
+    //     const findUser = await User.findOne({ googleId:req.body.googleId })
+    //        console.log(req.body.googleId)
+    //        console.log(findUser)
+    //         console.log({searchUser:findUser})
+    //         if (findUser !== null) {
+    //           console.log({request:req.user})
+    //              const updateUser = {
+    //                 googleId:findUser.googleId,
+    //                 fullname: findUser.fullname,
+    //              email: findUser.email,
+    //                  pic: findUser.pic,
+    //                 secret: findUser.secret,
+    //                 token:generateToken(findUser.googleId)
+    //          }
              
-             const updatedUser =   await User.findOneAndUpdate({
-                    googleId: findUser.googleId
-                },
-                    { $set: updateUser },
-                    { new: true }
+    //          const updatedUser =   await User.findOneAndUpdate({
+    //                 googleId: findUser.googleId
+    //             },
+    //                 { $set: updateUser },
+    //                 { new: true }
 
-                )
-                localStorage.setItem('customer',JSON.stringify(updatedUser))
-                console.log(updatedUser)
-                res.json(updatedUser)
+    //             )
                
-            } else {
-                console.log(req.user)
-                const newUser = new User({
-                    googleId:googleId,
-                    fullname:fullname ,
-                    email: email,
-                    pic: pic,
-                    secret: secret,
-                    token:generateToken(googleId)
-                })
-                await newUser.save()
-                localStorage.setItem('customer',JSON.stringify(newUser))
-                 res.json({
-                    _id:newUser._id,
-                    googleId:newUser.googleId,
-                    fullname:newUser.fullname,
-                    email:newUser.email,
-                    pic:newUser.pic,
-                    secret:newUser.secret,
-                    token:newUser.token
-                 })
+    //             console.log(updatedUser)
+    //             res.json(updatedUser)
+               
+    //         } else {
+    //             console.log(req.user)
+    //             const newUser = new User({
+    //                 googleId:googleId,
+    //                 fullname:fullname ,
+    //                 email: email,
+    //                 pic: pic,
+    //                 secret: secret,
+    //                 token:generateToken(googleId)
+    //             })
+    //             await newUser.save()
+               
+    //              res.json({
+    //                 _id:newUser._id,
+    //                 googleId:newUser.googleId,
+    //                 fullname:newUser.fullname,
+    //                 email:newUser.email,
+    //                 pic:newUser.pic,
+    //                 secret:newUser.secret,
+    //                 token:newUser.token
+    //              })
          
-            }
+    //         }
 
-            },
+    //         },
+            createUser: async (req, res) => {
+                const { email } = req.body
+                const findUser = await User.findOne({ email })
+                try{
+                    if (!findUser) {
+                        //create new user
+                        const newUser = await User.create({
+                            fullname:req.body.fullname,
+                            email:req.body.email,
+                            password:req.body.password,
+                           
+                        })
+            
+                        return res.status(200).json(newUser)
+                    }else{
+                       return res.status(500).json({
+                            msg: 'User Already Exist',
+                            success: false
+                        })
+                    }
+                   
+                }
+               catch(err){
+                res.json({msg:err.message})
+               }
+                   
+                
         
-       
-
-       
-    
+            },
     login: async (req, res) => {
         const { email, password } = req.body
 
