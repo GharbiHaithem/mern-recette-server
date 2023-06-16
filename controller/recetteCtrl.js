@@ -2,10 +2,10 @@ const Recette = require('../model/recette.model')
 const slugify = require('slugify')
 const recetteCtr = {
     createRecette: async (req, res) => {
-        const   {googleId}= req.user
+        const   {_id}= req.user
         try {
        
-           console.log({aaccccccaa:googleId})
+          
             if (req.body.title) {
                 req.body.slug = slugify(req.body.title)
             }
@@ -16,7 +16,7 @@ const recetteCtr = {
                     description: req.body.description,
                     category: req.body.category,
                     images: req.body.images,
-                     postedBy: googleId
+                     postedBy: _id
                 })
             await recettes.save()
             res.json(recettes)
@@ -31,8 +31,8 @@ const recetteCtr = {
         try {
             const skip = (page - 1) * ITEM_PER_PAGE
             const count =await Recette.estimatedDocumentCount(query)
-       
-            const recettes = await Recette.find({postedBy:req.user.googleId},query)
+            console.log({REQUESTUSER:req.user}) 
+            const recettes = await Recette.find({postedBy:req.user.id},query)
           
             console.log(recettes)
             const pageCount = count / ITEM_PER_PAGE

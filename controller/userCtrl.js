@@ -1,5 +1,5 @@
 const User = require('../model/user.model')
-const {generateToken} =require('../config/jwtToken')
+const {generateToken, generateRefreshToken} =require('../config/jwtToken')
 const userCtrl = {
     // createUser: async (req, res) => {
     //     const { googleId ,email,fullname,pic,secret} = req.body
@@ -67,6 +67,7 @@ const userCtrl = {
                             mobile:req.body.mobile,
                             email:req.body.email,
                             password:req.body.password,
+                            pic:req.body.pic
                            
                         })
             
@@ -105,6 +106,7 @@ const userCtrl = {
                 lastname: findUser.lastname,
                 email: findUser.email,
                 mobile: findUser.mobile,
+                pic:findUser.pic,
                 token: generateToken(findUser._id)
             })
         } else {

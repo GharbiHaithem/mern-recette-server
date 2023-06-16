@@ -10,7 +10,7 @@ const authMiddleware = async(req,res,next)=>
         if(token){
             const decode = jwt.verify(token,process.env.JWT_SECRET)
            console.log(decode.id)
-           const user = await User.findOne({googleId:decode.id})
+           const user = await User.findById(decode.id)
            console.log(user)
          console.log({request_user:user})
            req.user=user
