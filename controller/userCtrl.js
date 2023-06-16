@@ -62,7 +62,9 @@ const userCtrl = {
                     if (!findUser) {
                         //create new user
                         const newUser = await User.create({
-                            fullname:req.body.fullname,
+                            firstname:req.body.firstname,
+                            lastname:req.body.lastname,
+                            mobile:req.body.mobile,
                             email:req.body.email,
                             password:req.body.password,
                            
@@ -96,10 +98,7 @@ const userCtrl = {
                 new: true,
                 upsert: true
             })
-            res.cookie("refreshToken", refreshToken, {
-                httpOnly: true,
-                maxAge: 72 * 60 * 60 * 1000
-            })
+          
             res.json({
                 _id: findUser._id,
                 firstname: findUser.firstname,
