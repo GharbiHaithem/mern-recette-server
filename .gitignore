@@ -1,3 +1,6 @@
-node_modules
+node_modules/*
 .env
-public/images/
+.idea/*
+package-lock.json
+!public/images/ .gitkeep
+public/images/*
