@@ -58,7 +58,7 @@ app.use(cors({
 
 
 
-
+app.use(express.static('/app/public'))
 app.use('/api',authGoogleRoute)
 app.use('/api/user',authRoute)
 
