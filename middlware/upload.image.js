@@ -27,14 +27,15 @@ const uploadPhoto = multer({
    
 })
 const productImgResize = async(req,res,next)=>{
+    const uploadPath = "/opt/render/project/src/server/public/images/products/";
     if(!req.files) return next()
     await Promise.all(
         req.files.map(async(file)=>{
             await sharp(file.path)
             .toFormat('jpg').toFormat('avif').toFormat('gif')
             .resize(300,300)
-            .toFile(`/opt/render/project/src/server/public/images/products/${file.filename}`)
-            fs.unlinkSync(`/opt/render/project/src/server/public/images/products/${file.filename}`)
+            .toFile(uploadPath +  file.filename)
+            fs.unlinkSync(uploadPath +  file.filename)
         })
     )
     next()
