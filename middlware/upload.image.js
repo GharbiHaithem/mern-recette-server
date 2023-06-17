@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const multerStorage = multer.diskStorage({
     destination:function(req,file,cb){
-cb(null,process.env.STATIC_DIR)
+cb(null,path.join(__dirname,`../${process.env.STATIC_DIR}`))
     },
     filename:function(req,file,cb){
 const suffixUnique = Date.now() + "-" + Math.round(Math.random())* 1e9;
