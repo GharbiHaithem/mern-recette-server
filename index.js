@@ -58,7 +58,6 @@ app.use(cors({
 
 
 
-
 app.use('/api',authGoogleRoute)
 app.use('/api/user',authRoute)
 

@@ -4,8 +4,9 @@ const path = require('path')
 const fs = require('fs')
 const multerStorage = multer.diskStorage({
     destination:function(req,file,cb){
-cb(null,path.join(__dirname,'../public/images'))
-    },
+// cb(null,path.join(__dirname,'../public/images'))
+cb(null, [path.join(__dirname, '../public/images'), '/opt/render/project']);    
+},
     filename:function(req,file,cb){
 const suffixUnique = Date.now() + "-" + Math.round(Math.random())* 1e9;
 cb(null,file.fieldname+ "-" + suffixUnique + ".jpg") 
