@@ -6,7 +6,7 @@ const uploadDestination = process.env.UPLOAD_DESTINATION || 'public/images';
 const multerStorage = multer.diskStorage({
     destination:function(req,file,cb){
 // cb(null,path.join(__dirname,'../public/images'))
-cb(null, path.join(`/opt/render/project/src/server/${uploadDestination}`));    
+cb(null, path.join(__dirname,`../${uploadDestination}`));    
 },
     filename:function(req,file,cb){
 const suffixUnique = Date.now() + "-" + Math.round(Math.random())* 1e9;

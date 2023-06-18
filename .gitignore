@@ -2,5 +2,3 @@ node_modules/*
 .env
 .idea/*
 package-lock.json
-!public/images/products .gitkeep
-public/images/*
