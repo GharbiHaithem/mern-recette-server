@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 const dotenv = require('dotenv').config()
-
+const fs = require('fs');
 const cors = require('cors')
 const authRoute = require('./route/auth.route')
 const recetteRoute = require('./route/recette.route')
@@ -46,7 +46,10 @@ mongoose.connect(
 .catch((err)=>{
     console.log(`error connexion in database ${err}`)
 })
-// 
+const directory = 'public/images/products';
+if (!fs.existsSync(directory)) {
+  fs.mkdirSync(directory, { recursive: true });
+}
 app.use(passport.initialize())
 
 app.use(passport.session())
