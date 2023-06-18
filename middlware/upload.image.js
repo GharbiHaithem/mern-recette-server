@@ -2,10 +2,11 @@ const multer =  require('multer')
 const sharp = require('sharp')
 const path = require('path')
 const fs = require('fs')
+const uploadDestination = process.env.UPLOAD_DESTINATION || 'public/images';
 const multerStorage = multer.diskStorage({
     destination:function(req,file,cb){
 // cb(null,path.join(__dirname,'../public/images'))
-cb(null, path.join(`./public/images`));    
+cb(null, path.join(`/opt/render/project/src/server/${uploadDestination}`));    
 },
     filename:function(req,file,cb){
 const suffixUnique = Date.now() + "-" + Math.round(Math.random())* 1e9;
@@ -34,8 +35,8 @@ const productImgResize = async(req,res,next)=>{
             await sharp(file.path)
             .toFormat('jpg').toFormat('avif').toFormat('gif')
             .resize(300,300)
-            .toFile(`${process.env.STATIC_DIR}/products/${file.filename}`)
-            fs.unlinkSync(`${process.env.STATIC_DIR}/products/${file.filename}`)
+            .toFile(`${uploadDestination}/products/${file.filename}`)
+            fs.unlinkSync(`${uploadDestination}/products/${file.filename}`)
         })
     )
     next()
