@@ -9,13 +9,22 @@ const authMiddleware = async(req,res,next)=>
     try{
         if(token){
             const decode = jwt.verify(token,process.env.JWT_SECRET)
-           console.log(decode.id)
-           const user = await User.findById(decode.id)
-           console.log(user)
-         console.log({request_user:user})
-           req.user=user
-   
-           next()
+           console.log({reqHeaderID:decode.id})
+           console.log(typeof decode.id)
+           let __user = await User.findOne({googleId : decode.id})
+           if(__user){
+            req.user = __user
+            next()
+           }
+        else{
+          let user = await User.findById(decode.id)
+          console.log(user)
+        console.log({request_user:user})
+          req.user=user
+  
+          next()
+        }
+          
         }
      
     }catch(error){

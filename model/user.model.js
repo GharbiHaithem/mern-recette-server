@@ -18,6 +18,7 @@ mobile:String,
     default:""
   },
   token:String,
+  googleId : String,
   whishlist:[
     {type:mongoose.Schema.Types.ObjectId,ref:'Recette'}
   ],

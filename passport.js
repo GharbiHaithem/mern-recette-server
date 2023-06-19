@@ -15,7 +15,7 @@ const passport = require('passport')
 passport.use(new GoogleStrategy({
     clientID: "483148789252-3u00lc95p6ct96nh1hedoc2l0d392aja.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: `http://localhost:5000/api/auth/google/callback`,
+    callbackURL: `https://recette-crud.onrender.com/api/auth/google/callback`,
     scope: ["profile", "email"],
     userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
 
@@ -24,8 +24,9 @@ passport.use(new GoogleStrategy({
     function (accessToken, refreshToken, profile, callback) {
 
         const profilPicUrl = profile.photos[0].value
-       callback(null,profile)
-
+    console.log(profile)
+            callback(null,profile)
+          
         // User.findOne({ googleId: profile.id }), async function (err, user) {
 
         //     console.log(user)
