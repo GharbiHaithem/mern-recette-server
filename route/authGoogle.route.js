@@ -20,7 +20,7 @@ router.get("/auth/login/failed",(req,res)=>{
 })
 router.get("/auth/google",passport.authenticate("google",["profile","email"]))
 router.get("/auth/google/callback",passport.authenticate("google",{
-    successRedirect:"https://recette-mern-projects.vercel.app/myrecette",
+    successRedirect:`${process.env.BASE_URL_FRONT}/myrecette`,
     failureRedirect:"/login/failed"
 }))
 router.get("/auth/logout",async(req,res)=>{
@@ -31,7 +31,7 @@ router.get("/auth/logout",async(req,res)=>{
         }
         // Effectuer d'autres actions après la déconnexion réussie
         // Rediriger l'utilisateur vers une autre page, etc.
-        res.redirect("https://recette-mern-projects.vercel.app")
+        res.redirect(process.env.BASE_URL_FRONT)
       });
   
 })

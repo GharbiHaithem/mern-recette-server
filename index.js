@@ -54,7 +54,7 @@ app.use(passport.initialize())
 
 app.use(passport.session())
 app.use(cors({
-    origin:"https://recette-mern-projects.vercel.app",
+    origin:process.env.BASE_URL_FRONT,
     methods:"GET,POST,PUT,DELETE",
     credentials:true
 }))
