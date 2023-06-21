@@ -1,5 +1,6 @@
 
 
+const { generateToken } = require('./config/jwtToken');
 const User = require('./model/user.model');
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -15,54 +16,41 @@ const passport = require('passport')
 passport.use(new GoogleStrategy({
     clientID: "483148789252-3u00lc95p6ct96nh1hedoc2l0d392aja.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: `${process.env.BASE_URL}/auth/google/callback`,
+    callbackURL: `http://localhost:5000/api/auth/google/callback`,
     scope: ["profile", "email"],
     userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
 
 
 },
-    function (accessToken, refreshToken, profile, callback) {
-
-        const profilPicUrl = profile.photos[0].value
-    console.log(profile)
-            callback(null,profile)
+    async (accessToken, refreshToken, profile, callback)=> {  
+   
+        const newUser = {
+            googleId:profile.id,
+            firstname:profile.name.givenName,
+            lastname:profile.name.familyName,
+            pic:profile.photos[0].value,
+            email:profile.emails,
+            token: generateToken(profile.id)
+        }
+        try{
+             let user =await User.findOne({googleId : profile.id})
+            
+             if(user){
+                console.log(user)
+                 callback(null,user)
+                }
+         else{
+            console.log(user)
+            user = await User.create(newUser)
+            callback(null,user)
+         }
+             
+        }catch(err){
+            console.log(err)
+        }
+    
           
-        // User.findOne({ googleId: profile.id }), async function (err, user) {
-
-        //     console.log(user)
-        //     if (user) {
-        //         const updateUser = {
-        //             fullname: profile.displayName,
-        //             email: profile.emails[0].value,
-        //             pic: profile.photos[0].value,
-        //             secret: accessToken
-        //         }
-        //         await User.findOneAndUpdate({
-        //             _id: user.id
-        //         },
-        //             { $set: updateUser },
-        //             { new: true }
-
-        //         ).then((result) => {
-        //             console.log(result)
-        //             return cb(err, result)
-
-        //         })
-        //     } else {
-        //         const newUser = new User({
-        //             googleId: profile.id,
-        //             username: profile.displayName,
-        //             email: profile.emails[0].value,
-        //             pic: profile.photos[0].value,
-        //             secret: accessToken
-        //         })
-        //         await newUser.save().then((result) => {
-        //             console.log(result)
-        //             return cb(err, result)
-
-        //         })
-        //     }
-        // }
+       
     }))
 
 passport.serializeUser((user,done)=>{
