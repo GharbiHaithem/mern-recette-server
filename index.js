@@ -16,7 +16,7 @@ const passport = require('passport')
 const GoogleStrategy = require("./passport")
 const authGoogleRoute = require('./route/authGoogle.route')
 const session = require('express-session')
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 443;
 const https = require('https');
 const path = require('path')
 app.use(cors())
