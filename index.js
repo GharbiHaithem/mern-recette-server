@@ -82,6 +82,17 @@ const options = {
     cert: fs.readFileSync(certPath)
    
    };
+   if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+    // Les fichiers existent, vérifiez leur contenu
+    const keyContent = fs.readFileSync(keyPath, 'utf8');
+    const certContent = fs.readFileSync(certPath, 'utf8');
+  
+    // Vérifiez si les contenus des fichiers sont valides
+  
+    // Vous pouvez utiliser des bibliothèques telles que `openssl` ou `crypto` pour valider les certificats.
+  } else {
+    console.log('Les fichiers de certificat SSL n\'existent pas');
+  }
 const server = https.createServer(options,app)   
 server.listen(PORT, ()=>{
     console.log(`server is running at PORT ${PORT}`)
