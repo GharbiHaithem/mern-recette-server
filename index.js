@@ -73,6 +73,8 @@ app.use('/api/category',categoryRoute)
 // app.use(errorHandler)
 const keyPath = path.resolve(__dirname, './certificate/key.pem');
 const certPath = path.resolve(__dirname, './certificate/cert.pem');
+console.log(keyPath)
+console.log(certPath)
 const options = {
 
     key: fs.readFileSync(keyPath),
