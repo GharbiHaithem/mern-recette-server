@@ -17,6 +17,8 @@ const GoogleStrategy = require("./passport")
 const authGoogleRoute = require('./route/authGoogle.route')
 const session = require('express-session')
 const PORT = process.env.PORT || 5000;
+const https = require('https');
+const fs = require('fs');
 app.use(cors())
 app.use(session({ 
     secret:'nosecret',
@@ -69,6 +71,14 @@ app.use('/api',uploadRooute)
 app.use('/api/category',categoryRoute)
 // app.use(notFound)
 // app.use(errorHandler)
-app.listen(PORT, ()=>{
+const options = {
+
+    key: fs.readFileSync('./certificate/cert.pem'),
+   
+    cert: fs.readFileSync('./certificate/cert.pem')
+   
+   };
+const server = https.createServer(options,app)   
+server.listen(PORT, ()=>{
     console.log(`server is running at PORT ${PORT}`)
 }) 
