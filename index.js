@@ -16,9 +16,7 @@ const passport = require('passport')
 const GoogleStrategy = require("./passport")
 const authGoogleRoute = require('./route/authGoogle.route')
 const session = require('express-session')
-const PORT = process.env.PORT || 443;
-const https = require('https');
-const path = require('path')
+const PORT = process.env.PORT || 5000;
 app.use(cors())
 app.use(session({ 
     secret:'nosecret',
@@ -71,29 +69,6 @@ app.use('/api',uploadRooute)
 app.use('/api/category',categoryRoute)
 // app.use(notFound)
 // app.use(errorHandler)
-const keyPath = path.resolve(__dirname, './certificate/key.pem');
-const certPath = path.resolve(__dirname, './certificate/cert.pem');
-console.log(keyPath)
-console.log(certPath)
-const options = {
-
-    key: fs.readFileSync(keyPath),
-   
-    cert: fs.readFileSync(certPath)
-   
-   };
-   if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
-    // Les fichiers existent, vérifiez leur contenu
-    const keyContent = fs.readFileSync(keyPath, 'utf8');
-    const certContent = fs.readFileSync(certPath, 'utf8');
-  
-    // Vérifiez si les contenus des fichiers sont valides
-  
-    // Vous pouvez utiliser des bibliothèques telles que `openssl` ou `crypto` pour valider les certificats.
-  } else {
-    console.log('Les fichiers de certificat SSL n\'existent pas');
-  }
-const server = https.createServer(options,app)   
-server.listen(PORT, ()=>{
+app.listen(PORT, ()=>{
     console.log(`server is running at PORT ${PORT}`)
 }) 
