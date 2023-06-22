@@ -71,6 +71,8 @@ app.use('/api',uploadRooute)
 app.use('/api/category',categoryRoute)
 // app.use(notFound)
 // app.use(errorHandler)
+const keyPath = path.resolve(__dirname, './certificate/key.pem');
+const certPath = path.resolve(__dirname, './certificate/cert.pem');
 const options = {
 
     key: fs.readFileSync('./certificate/cert.pem'),
