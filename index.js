@@ -75,9 +75,9 @@ const keyPath = path.resolve(__dirname, './certificate/key.pem');
 const certPath = path.resolve(__dirname, './certificate/cert.pem');
 const options = {
 
-    key: fs.readFileSync('./certificate/cert.pem'),
+    key: fs.readFileSync(keyPath),
    
-    cert: fs.readFileSync('./certificate/cert.pem')
+    cert: fs.readFileSync(certPath)
    
    };
 const server = https.createServer(options,app)   
