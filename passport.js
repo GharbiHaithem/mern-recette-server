@@ -29,7 +29,7 @@ passport.use(new GoogleStrategy({
             firstname:profile.name.givenName,
             lastname:profile.name.familyName,
             pic:profile.photos[0].value,
-            email:profile.emails,
+            email:profile.emails[0].value,
             token: generateToken(profile.id)
         }
         try{

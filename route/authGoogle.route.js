@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const passport = require('passport')
 router.get("/auth/login/success",(req,res)=>{
+  
     if(req.user){
         res.status(200).json({
             error:false,
